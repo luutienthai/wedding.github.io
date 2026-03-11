@@ -1249,20 +1249,53 @@
       var current  = 0;
       var isOpen   = false;
 
+      // ----- Preload cache -----
+      var cache = {};
+      function preload(src) {
+        if (!src || cache[src]) return;
+        var img = new Image();
+        img.src = src;
+        cache[src] = img;
+      }
+      function preloadAdjacent(idx) {
+        var len = slides.length;
+        preload(slides[(idx + 1) % len].src);
+        preload(slides[(idx - 1 + len) % len].src);
+      }
+
       function showSlide(idx, instant) {
         current = (idx + slides.length) % slides.length;
         counter.textContent = (current + 1) + ' / ' + slides.length;
-        if (instant) {
-          slideImg.src = slides[current].src;
-          slideImg.alt = slides[current].alt;
-          return;
+        var src = slides[current].src;
+        var alt = slides[current].alt;
+
+        // If already cached & decoded → swap instantly, no fade
+        var cached = cache[src];
+        var ready  = cached && cached.complete && cached.naturalWidth > 0;
+
+        if (instant || ready) {
+          slideImg.src = src;
+          slideImg.alt = alt;
+        } else {
+          slideImg.classList.add('fading');
+          // Start preloading, then swap when loaded
+          var loader = new Image();
+          loader.onload = function () {
+            cache[src] = loader;
+            slideImg.src = src;
+            slideImg.alt = alt;
+            slideImg.classList.remove('fading');
+          };
+          loader.onerror = function () {
+            // Fallback: show anyway
+            slideImg.src = src;
+            slideImg.alt = alt;
+            slideImg.classList.remove('fading');
+          };
+          loader.src = src;
         }
-        slideImg.classList.add('fading');
-        setTimeout(function () {
-          slideImg.src = slides[current].src;
-          slideImg.alt = slides[current].alt;
-          slideImg.classList.remove('fading');
-        }, 50);
+
+        preloadAdjacent(current);
       }
 
       function openSlideshow(idx) {
