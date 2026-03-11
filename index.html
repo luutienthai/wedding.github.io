@@ -492,12 +492,197 @@
         padding: 3.5rem 1.2rem;
       }
     }
+
+    /* ====================================================
+       ENHANCED ANIMATIONS
+    ==================================================== */
+
+    /* ----- Falling Petals Canvas ----- */
+    #petals-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      will-change: transform;
+    }
+
+    /* ----- Shimmer on couple names ----- */
+    @keyframes shimmerGold {
+      0%   { background-position: -200% center; }
+      100% { background-position:  200% center; }
+    }
+
+    .couple-names {
+      background: linear-gradient(
+        90deg,
+        #8b6508 0%, #d4a843 28%, #fff5c0 50%, #d4a843 72%, #8b6508 100%
+      );
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmerGold 4s linear 1.5s infinite;
+    }
+
+    .couple-names .amp {
+      background: linear-gradient(90deg, #a07070 0%, #e8b0b0 50%, #a07070 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* ----- Animated gold divider ----- */
+    .divider {
+      width: 0;
+      transition: width 0.9s ease 0.2s;
+    }
+
+    .divider.visible {
+      width: 60px;
+    }
+
+    /* ----- Section title underline reveal + glow ----- */
+    .section-title {
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 1.5px;
+      background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+      transition: width 0.9s ease 0.4s;
+    }
+
+    .section-title.visible::after {
+      width: 90px;
+    }
+
+    @keyframes glowText {
+      0%, 100% { filter: none; }
+      50%       { filter: drop-shadow(0 0 10px rgba(212, 168, 67, 0.45)); }
+    }
+
+    .section-title.visible {
+      animation: glowText 4s ease-in-out 1s infinite;
+    }
+
+    /* ----- Staggered card entrance ----- */
+    .timeline-item {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.55s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .timeline-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .timeline-item:hover {
+      transform: translateY(-4px);
+    }
+
+    .gallery-item {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.55s ease,
+                  transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow 0.35s ease;
+    }
+
+    .gallery-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.07) translateY(-5px);
+      box-shadow: 0 14px 30px rgba(184, 134, 11, 0.13);
+    }
+
+    .countdown-item {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+
+    .countdown-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ----- Countdown digit flip ----- */
+    @keyframes flipIn {
+      0%   { opacity: 0; transform: translateY(-14px); }
+      60%  { opacity: 1; transform: translateY(3px);   }
+      100% { opacity: 1; transform: translateY(0);     }
+    }
+
+    .countdown-number.flipping {
+      animation: flipIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* ----- Button ripple ----- */
+    .btn {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ripple-wave {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.35);
+      transform: scale(0);
+      animation: rippleExpand 0.55s linear forwards;
+      pointer-events: none;
+    }
+
+    @keyframes rippleExpand {
+      to { transform: scale(4.5); opacity: 0; }
+    }
+
+    /* ----- Person avatar hover ----- */
+    .person-avatar {
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow 0.4s ease;
+    }
+
+    .person:hover .person-avatar {
+      transform: scale(1.12) rotate(4deg);
+      box-shadow: 0 10px 28px rgba(184, 134, 11, 0.2);
+    }
+
+    /* ----- Timeline icon bounce on hover ----- */
+    @keyframes iconBounce {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.5); }
+      100% { transform: scale(1); }
+    }
+
+    .timeline-item:hover .timeline-icon {
+      display: inline-block;
+      animation: iconBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
   </style>
 </head>
 <body>
 
   <!-- Hero -->
   <header class="hero">
+    <canvas id="petals-canvas" aria-hidden="true"></canvas>
     <div class="hero-content">
       <p class="save-the-date">Save the Date</p>
       <h1 class="couple-names">
@@ -680,70 +865,180 @@
   </footer>
 
   <script>
-    // Countdown Timer
-    function updateCountdown() {
-      const weddingDate = new Date('2026-11-15T11:00:00+07:00');
-      const now = new Date();
-      const diff = weddingDate - now;
+    // ===== Countdown Timer =====
+    const _cdIds = ['days', 'hours', 'minutes', 'seconds'];
+    const _cdPrev = {};
 
+    function updateCountdown() {
+      const diff = new Date('2026-11-15T11:00:00+07:00') - new Date();
       if (diff <= 0) {
-        document.getElementById('days').textContent = '0';
-        document.getElementById('hours').textContent = '0';
-        document.getElementById('minutes').textContent = '0';
-        document.getElementById('seconds').textContent = '0';
+        _cdIds.forEach(id => { document.getElementById(id).textContent = '0'; });
         return;
       }
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-      document.getElementById('days').textContent = days;
-      document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-      document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-      document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+      const vals = {
+        days:    String(Math.floor(diff / 86400000)),
+        hours:   String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0'),
+        minutes: String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0'),
+        seconds: String(Math.floor((diff % 60000) / 1000)).padStart(2, '0'),
+      };
+      _cdIds.forEach(id => {
+        if (vals[id] === _cdPrev[id]) return;
+        _cdPrev[id] = vals[id];
+        const el = document.getElementById(id);
+        el.textContent = vals[id];
+        el.classList.remove('flipping');
+        void el.offsetWidth; // trigger reflow to restart animation
+        el.classList.add('flipping');
+      });
     }
 
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
-    // Send Wish (placeholder)
+    // ===== Send Wish =====
     function sendWish() {
       const nameEl = document.getElementById('name');
       const wishEl = document.getElementById('wish');
       const name = nameEl.value.trim();
       const wish = wishEl.value.trim();
-
       if (!name || !wish) {
         alert('Vui lòng nhập đầy đủ họ tên và lời chúc!');
         return;
       }
-
       alert('Cảm ơn ' + name + '! Lời chúc của bạn đã được ghi nhận ♥');
       nameEl.value = '';
       wishEl.value = '';
     }
 
-    // Scroll Reveal Animation
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    document.querySelectorAll('section').forEach((section) => {
-      section.style.opacity = '0';
-      section.style.transform = 'translateY(30px)';
-      section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-      observer.observe(section);
+    // ===== Button Ripple =====
+    document.querySelectorAll('.btn').forEach(btn => {
+      btn.addEventListener('click', function (e) {
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const wave = document.createElement('span');
+        wave.className = 'ripple-wave';
+        wave.style.width  = size + 'px';
+        wave.style.height = size + 'px';
+        wave.style.left   = (e.clientX - rect.left - size / 2) + 'px';
+        wave.style.top    = (e.clientY - rect.top  - size / 2) + 'px';
+        this.appendChild(wave);
+        setTimeout(() => wave.remove(), 600);
+      });
     });
+
+    // ===== Falling Petals Canvas =====
+    (function () {
+      const canvas = document.getElementById('petals-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      function resize() {
+        canvas.width  = canvas.parentElement.offsetWidth;
+        canvas.height = canvas.parentElement.offsetHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize, { passive: true });
+
+      class Petal {
+        constructor(scatter) { this.reset(scatter); }
+        reset(scatter) {
+          this.x    = Math.random() * canvas.width;
+          this.y    = scatter ? Math.random() * canvas.height : -20;
+          this.size = Math.random() * 9 + 5;
+          this.vy   = Math.random() * 0.7 + 0.4;
+          this.vx   = (Math.random() - 0.5) * 0.5;
+          this.rot  = Math.random() * Math.PI * 2;
+          this.dRot = (Math.random() - 0.5) * 0.025;
+          this.a    = Math.random() * 0.28 + 0.08;
+          this.rose = Math.random() > 0.4;
+        }
+        update() {
+          this.y += this.vy;
+          this.x += this.vx;
+          this.rot += this.dRot;
+          if (this.y > canvas.height + 20) this.reset(false);
+        }
+        draw() {
+          const s = this.size;
+          ctx.save();
+          ctx.globalAlpha = this.a;
+          ctx.translate(this.x, this.y);
+          ctx.rotate(this.rot);
+          ctx.fillStyle = this.rose ? '#d4a0a0' : '#d4a843';
+          ctx.beginPath();
+          ctx.moveTo(0, -s);
+          ctx.bezierCurveTo( s * 0.7, -s * 0.4,  s * 0.7,  s * 0.4, 0,  s);
+          ctx.bezierCurveTo(-s * 0.7,  s * 0.4, -s * 0.7, -s * 0.4, 0, -s);
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+
+      const petals = Array.from({ length: 28 }, (_, i) => new Petal(i < 20));
+      let raf = null;
+      let active = true;
+
+      function loop() {
+        if (!active) { raf = null; return; }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        petals.forEach(p => { p.update(); p.draw(); });
+        raf = requestAnimationFrame(loop);
+      }
+      loop();
+
+      // Pause animation when hero leaves viewport (performance)
+      new IntersectionObserver(([entry]) => {
+        active = entry.isIntersecting;
+        if (active && !raf) loop();
+      }, { threshold: 0 }).observe(canvas.parentElement);
+    })();
+
+    // ===== Scroll Reveal =====
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        el.style.opacity   = '1';
+        el.style.transform = 'translateY(0)';
+        el.querySelectorAll('.section-title').forEach(t => t.classList.add('visible'));
+        el.querySelectorAll('.divider').forEach(d => d.classList.add('visible'));
+        revealObs.unobserve(el);
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('section').forEach(s => {
+      s.style.opacity   = '0';
+      s.style.transform = 'translateY(30px)';
+      s.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+      revealObs.observe(s);
+    });
+
+    // Hero divider triggered after hero entrance animation
+    const heroDivider = document.querySelector('.hero .divider');
+    if (heroDivider) setTimeout(() => heroDivider.classList.add('visible'), 1300);
+
+    // ===== Staggered Card Entrance =====
+    const staggerObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const idx = Array.from(entry.target.parentElement.children).indexOf(entry.target);
+        setTimeout(() => entry.target.classList.add('visible'), idx * 130);
+        staggerObs.unobserve(entry.target);
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.timeline-item, .gallery-item, .countdown-item').forEach(el => {
+      staggerObs.observe(el);
+    });
+
+    // ===== Hero Parallax (subtle) =====
+    const heroContentEl = document.querySelector('.hero-content');
+    const heroEl = document.querySelector('.hero');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY < heroEl.offsetHeight) {
+        heroContentEl.style.transform = 'translateY(' + (window.scrollY * 0.25) + 'px)';
+      }
+    }, { passive: true });
   </script>
 </body>
 </html>
