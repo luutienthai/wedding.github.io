@@ -22,7 +22,7 @@
       --gold-light: #d4a843;
       --cream: #fdf8f0;
       --text: #3a3a3a;
-      --text-light: #6b6b6b;
+      --text-light: #3b3b3b;
       --rose: #c9a0a0;
       --rose-light: #f0e0e0;
     }
@@ -48,7 +48,7 @@
       justify-content: center;
       text-align: center;
       background:
-        linear-gradient(135deg, rgba(253, 248, 240, 0.35), rgba(240, 224, 224, 0.40)),
+        linear-gradient(135deg, rgba(253, 248, 240, 0.30), rgba(240, 224, 224, 0.35)),
         url('hero-area.jpg') center / cover no-repeat;
       padding: 2rem;
     }
@@ -131,8 +131,8 @@
 
     .wedding-location {
       font-size: 0.9rem;
-      color: var(--text-light);
-      font-weight: 300;
+      color: black;
+      font-weight: 500;
     }
 
     .divider {
@@ -479,6 +479,12 @@
 
     /* ===== Responsive ===== */
     @media (max-width: 600px) {
+      .hero {
+        background:
+          linear-gradient(135deg, rgba(253, 248, 240, 0.30), rgba(240, 224, 224, 0.35)),
+          url('hero-area.jpg') 80% center / cover no-repeat;
+      }
+
       .couple-section {
         grid-template-columns: 1fr;
         gap: 1rem;
@@ -818,8 +824,8 @@
         Hữu Chiến
       </h1>
       <div class="divider"></div>
-      <p class="wedding-date">22.03 &amp; 29.03.2026</p>
-      <p class="wedding-location">MIPEC PALACE &amp; Tư Gia Nhà Gái — Hà Nội</p>
+      <p class="wedding-date">29.03.2026</p>
+      <p class="wedding-location">MIPEC PALACE &amp; Tư Gia Nhà Trai — Hà Nội</p>
       <div class="scroll-hint">
         <p>Kéo xuống để xem thêm</p>
         <span>↓</span>
@@ -863,20 +869,10 @@
       </p>
       <div class="divider"></div>
       <p>
-        <span class="highlight">Nhà gái:</span> Ông Nguyễn Tùng Lâm &amp; Bà Nguyễn Thị Bích Ngọc
+        <span class="highlight">Nhà gái:</span> Ông Nguyễn Tùng Lâm &amp; Bà <span style="display:inline-block">Nguyễn Thị Bích Ngọc</span>
       </p>
       <p>
-        <span class="highlight">Nhà trai:</span> Ông Trần Hữu Quyết &amp; Bà Trần Thúy Hoan
-      </p>
-      <div class="divider"></div>
-      <p>Kính mời quý khách đến dự <span class="highlight">Tiệc Cưới</span> chung vui cùng gia đình chúng tôi:</p>
-      <p>
-        <span class="highlight">11 giờ 30, Chủ Nhật — 22 tháng 03 năm 2026</span><br />
-        <em style="font-size:0.95em;color:var(--text-light)">(Tức ngày 04 tháng 02 năm Bính Ngọ)</em>
-      </p>
-      <p>
-        Tại: <span class="highlight">Trung Tâm HN Tiệc Cưới MIPEC PALACE (Sảnh 4)</span><br />
-        229 Phố Tây Sơn, Phường Kim Liên, Hà Nội
+        <span class="highlight">Nhà trai:</span> Ông Trần Hữu Quyết &amp; Bà <span style="display:inline-block">Trần Thúy Hoan</span>
       </p>
       <div class="divider"></div>
       <p>Và <span class="highlight">Lễ Vu Quy</span> tổ chức tại nhà gái:</p>
@@ -911,7 +907,7 @@
   </section>
 
   <!-- Timeline -->
-  <section>
+  <!-- <section>
     <h2 class="section-title">Lịch Trình</h2>
     <p class="section-subtitle">Wedding Timeline</p>
     <div class="timeline">
@@ -940,7 +936,7 @@
         <div class="timeline-label" style="margin-top:0.4rem;font-size:0.75rem">22.03.2026</div>
       </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- Gallery -->
   <section>
@@ -988,18 +984,6 @@
     <h2 class="section-title">Địa Điểm</h2>
     <p class="section-subtitle">Wedding Venue</p>
     <div class="map-info">
-      <p><strong>🍽️ Tiệc Cưới — 11:30, Chủ Nhật 22.03.2026</strong></p>
-      <p class="address" style="margin-top:0.3rem">Trung Tâm HN Tiệc Cưới MIPEC PALACE (Sảnh 4)</p>
-      <p class="address">229 Phố Tây Sơn, Phường Kim Liên, Hà Nội</p>
-      <br />
-      <a
-        class="btn"
-        href="https://maps.google.com/?q=229+Ph%E1%BB%91+T%C3%A2y+S%C6%A1n+H%C3%A0+N%E1%BB%99i"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Xem bản đồ
-      </a>
       <div class="divider" style="margin:2rem auto"></div>
       <p><strong>💒 Lễ Vu Quy — 08:00, Chủ Nhật 29.03.2026</strong></p>
       <p class="address" style="margin-top:0.3rem">Tư Gia Nhà Gái</p>
@@ -1054,7 +1038,7 @@
     const _cdPrev = {};
 
     function updateCountdown() {
-      const diff = new Date('2026-03-22T11:30:00+07:00') - new Date();
+      const diff = new Date('2026-03-29T08:00:00+07:00') - new Date();
       if (diff <= 0) {
         _cdIds.forEach(id => { document.getElementById(id).textContent = '0'; });
         return;
