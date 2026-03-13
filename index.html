@@ -44,12 +44,13 @@
       position: relative;
       min-height: 100vh;
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: center;
       text-align: center;
       background:
         linear-gradient(135deg, rgba(253, 248, 240, 0.30), rgba(240, 224, 224, 0.35)),
-        url('hero-area.jpg') center / cover no-repeat;
+        url('hero-area.jpg') center / contain no-repeat;
+      background-color: var(--cream);
       padding: 2rem;
     }
 
@@ -98,11 +99,10 @@
 
     .save-the-date {
       font-family: 'Montserrat', sans-serif;
-      font-weight: 300;
+      font-weight: 800;
       font-size: 0.85rem;
       letter-spacing: 0.35em;
       text-transform: uppercase;
-      color: var(--gold);
       margin-bottom: 1.5rem;
     }
 
@@ -127,6 +127,7 @@
       font-weight: 600;
       color: var(--text);
       margin: 1.5rem 0 0.5rem;
+      margin-top: -65px;
     }
 
     .wedding-location {
@@ -143,7 +144,7 @@
     }
 
     .scroll-hint {
-      margin-top: 2rem;
+      margin-top: 24rem;
       font-size: 0.75rem;
       color: var(--text-light);
       letter-spacing: 0.2em;
@@ -521,7 +522,7 @@
       .hero {
         background:
           linear-gradient(135deg, rgba(253, 248, 240, 0.30), rgba(240, 224, 224, 0.35)),
-          url('hero-area.jpg') 80% center / cover no-repeat;
+          url('hero-area.jpg') 60% center / cover no-repeat;
       }
 
       .couple-section {
@@ -568,7 +569,7 @@
       100% { background-position:  200% center; }
     }
 
-    .couple-names {
+    .couple-names, .save-the-date, .wedding-date {
       background: linear-gradient(
         90deg,
         #8b6508 0%, #d4a843 28%, #fff5c0 50%, #d4a843 72%, #8b6508 100%
@@ -854,13 +855,12 @@
     <div class="hero-content">
       <p class="save-the-date">Save the Date</p>
       <h1 class="couple-names">
-        Hoàng Mai
-        <span class="amp">&amp;</span>
         Hữu Chiến
+        <span class="amp">&amp;</span>
+        Hoàng Mai
       </h1>
       <div class="divider"></div>
       <p class="wedding-date">29.03.2026</p>
-      <p class="wedding-location">Tư Gia Nhà Trai — Hà Nội</p>
       <div class="scroll-hint">
         <p>Kéo xuống để xem thêm</p>
         <span>↓</span>
@@ -904,20 +904,20 @@
       </p>
       <div class="divider"></div>
       <p>
-        <span class="highlight">Nhà gái:</span> Ông Nguyễn Tùng Lâm &amp; Bà <span style="display:inline-block">Nguyễn Thị Bích Ngọc</span>
+        <span class="highlight">Nhà trai:</span> Ông Trần Hữu Quyết <span style="display:inline-block"> Bà Trần Thúy Hoan</span>
       </p>
       <p>
-        <span class="highlight">Nhà trai:</span> Ông Trần Hữu Quyết &amp; Bà <span style="display:inline-block">Trần Thúy Hoan</span>
+        <span class="highlight">Nhà gái:</span> Ông Nguyễn Tùng Lâm <span style="display:inline-block"> Bà Nguyễn Thị Bích Ngọc</span>
       </p>
       <div class="divider"></div>
-      <p>Và <span class="highlight">Lễ Vu Quy</span> tổ chức tại nhà gái:</p>
+      <p><span class="highlight">Lễ Thành Hôn</span> tổ chức tại nhà trai:</p>
       <p>
-        <span class="highlight">08 giờ 00, Chủ Nhật — 29 tháng 03 năm 2026</span><br />
+        <span class="highlight">10 giờ 00, Chủ Nhật — 29 tháng 03 năm 2026</span><br />
         <em style="font-size:0.95em;color:var(--text-light)">(Tức ngày 11 tháng 02 năm Bính Ngọ)</em>
       </p>
       <p>
-        Tại: <span class="highlight">Tư Gia Nhà Gái</span><br />
-        B2309 Chung cư Beasky, Phường Định Công, Hà Nội
+        Tại: <span class="highlight">Tư Gia Nhà Trai</span><br />
+        Số nhà 266 thôn Lê Lợi, Xã Vân Đình, Thành phố Hà Nội
       </p>
     </div>
   </section>
@@ -930,13 +930,11 @@
       <div class="person">
         <div class="person-avatar">🤵</div>
         <h3 class="person-name">Trần Hữu Chiến</h3>
-        <p class="person-info">Con trai Ông Trần Hữu Quyết<br />&amp; Bà Trần Thúy Hoan</p>
       </div>
       <div class="heart-divider">♥</div>
       <div class="person">
         <div class="person-avatar">👰</div>
         <h3 class="person-name">Nguyễn Hoàng Mai</h3>
-        <p class="person-info">Con gái Ông Nguyễn Tùng Lâm<br />&amp; Bà Nguyễn Thị Bích Ngọc</p>
       </div>
     </div>
   </section>
@@ -983,9 +981,8 @@
       <div class="gallery-item"><img src="images/cards/DAT_0186.jpg" alt="Ảnh cưới Hoàng Mai &amp; Hữu Chiến" loading="lazy" /></div>
       <div class="gallery-item"><img src="images/cards/DAT_0298.jpg" alt="Ảnh cưới Hoàng Mai &amp; Hữu Chiến" loading="lazy" /></div>
       <div class="gallery-item"><img src="images/cards/DAT_0479.jpg" alt="Ảnh cưới Hoàng Mai &amp; Hữu Chiến" loading="lazy" /></div>
-      <div class="gallery-item"><img src="images/cards/DAT_0805.jpg" alt="Ảnh cưới Hoàng Mai &amp; Hữu Chiến" loading="lazy" /></div>
       <div class="gallery-item"><img src="images/cards/DAT_0819.jpg" alt="Ảnh cưới Hoàng Mai &amp; Hữu Chiến" loading="lazy" /></div>
-      <div class="gallery-item"><img src="images/cards/DAT_0957.jpg" alt="Ảnh cưới Hoàng Mai &amp; Hữu Chiến" loading="lazy" /></div>
+      <!-- <div class="gallery-item"><img src="images/cards/DAT_0957.jpg" alt="Ảnh cưới Hoàng Mai &amp; Hữu Chiến" loading="lazy" /></div>
       <div class="gallery-item"><img src="images/cards/DAT_1091.jpg" alt="Ảnh cưới Hoàng Mai &amp; Hữu Chiến" loading="lazy" /></div>
       <div class="gallery-item"><img src="images/cards/DAT_7750.jpg" alt="Ảnh cưới Hoàng Mai &amp; Hữu Chiến" loading="lazy" /></div>
       <div class="gallery-item"><img src="images/cards/DAT_7960.jpg" alt="Ảnh cưới Hoàng Mai &amp; Hữu Chiến" loading="lazy" /></div>
@@ -1007,10 +1004,7 @@
       <div class="gallery-item"><img src="images/cards/DAT_9168.jpg" alt="Ảnh cưới Hoàng Mai &amp; Hữu Chiến" loading="lazy" /></div>
       <div class="gallery-item"><img src="images/cards/DAT_9488.jpg" alt="Ảnh cưới Hoàng Mai &amp; Hữu Chiến" loading="lazy" /></div>
       <div class="gallery-item"><img src="images/cards/DAT_9541.jpg" alt="Ảnh cưới Hoàng Mai &amp; Hữu Chiến" loading="lazy" /></div>
-      <div class="gallery-item"><img src="images/cards/DAT_9983.jpg" alt="Ảnh cưới Hoàng Mai &amp; Hữu Chiến" loading="lazy" /></div>
-    </div>
-    <div class="gallery-more-wrap">
-      <button class="btn" id="gallery-see-more">Xem tất cả ảnh</button>
+      <div class="gallery-item"><img src="images/cards/DAT_9983.jpg" alt="Ảnh cưới Hoàng Mai &amp; Hữu Chiến" loading="lazy" /></div> -->
     </div>
   </section>
 
@@ -1020,13 +1014,13 @@
     <p class="section-subtitle">Wedding Venue</p>
     <div class="map-info">
       <div class="divider" style="margin:2rem auto"></div>
-      <p><strong>💒 Lễ Vu Quy — 08:00, Chủ Nhật 29.03.2026</strong></p>
-      <p class="address" style="margin-top:0.3rem">Tư Gia Nhà Gái</p>
-      <p class="address">B2309 Chung cư Beasky, Phường Định Công, Hà Nội</p>
+      <p><strong>💒 Lễ Thành Hôn — 10:00, Chủ Nhật 29.03.2026</strong></p>
+      <p class="address" style="margin-top:0.3rem">Tư Gia Nhà Trai</p>
+      <p class="address">Số nhà 266 thôn Lê Lợi, Xã Vân Đình, Thành phố Hà Nội</p>
       <br />
       <a
         class="btn"
-        href="https://maps.google.com/?q=Chung+c%C6%B0+Beasky+%C4%90%E1%BB%8Bnh+C%C3%B4ng+H%C3%A0+N%E1%BB%99i"
+        href="https://www.google.com/maps/place/266+%C4%90.+L%C3%AA+L%E1%BB%A3i,+TT.+V%C3%A2n+%C4%90%C3%ACnh,+%E1%BB%A8ng+H%C3%B2a,+H%C3%A0+N%E1%BB%99i,+Vi%E1%BB%87t+Nam/@20.7343494,105.7706938,19z/data=!4m6!3m5!1s0x3134355786c81885:0xdef80a2212c0f03e!8m2!3d20.7343345!4d105.7706018!16s%2Fg%2F11xvmwc6k8?entry=ttu&g_ep=EgoyMDI2MDMxMC4wIKXMDSoASAFQAw%3D%3D"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -1235,14 +1229,7 @@
       staggerObs.observe(el);
     });
 
-    // ===== Hero Parallax (subtle) =====
-    const heroContentEl = document.querySelector('.hero-content');
-    const heroEl = document.querySelector('.hero');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY < heroEl.offsetHeight) {
-        heroContentEl.style.transform = 'translateY(' + (window.scrollY * 0.25) + 'px)';
-      }
-    }, { passive: true });
+
 
     // ===== Gallery: show 6 initially + Slideshow =====
     (function () {
