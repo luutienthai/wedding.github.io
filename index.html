@@ -346,6 +346,45 @@
       margin: 2rem auto 0;
     }
 
+    .wishes-list {
+      max-width: 500px;
+      margin: 2.5rem auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .wish-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.2rem 1.5rem;
+      text-align: left;
+      box-shadow: 0 2px 16px rgba(184, 134, 11, 0.07);
+      border: 1px solid rgba(184, 134, 11, 0.1);
+      animation: fadeInUp 0.5s ease-out;
+    }
+
+    .wish-card .wish-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 0.3rem;
+    }
+
+    .wish-card .wish-text {
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .wish-card .wish-time {
+      font-size: 0.72rem;
+      color: var(--text-light);
+      margin-top: 0.5rem;
+      opacity: 0.7;
+    }
+
     .form-group {
       margin-bottom: 1.2rem;
       text-align: left;
@@ -488,10 +527,6 @@
       .couple-section {
         grid-template-columns: 1fr;
         gap: 1rem;
-      }
-
-      .heart-divider {
-        order: -1;
       }
 
       .invitation {
@@ -825,7 +860,7 @@
       </h1>
       <div class="divider"></div>
       <p class="wedding-date">29.03.2026</p>
-      <p class="wedding-location">MIPEC PALACE &amp; Tư Gia Nhà Trai — Hà Nội</p>
+      <p class="wedding-location">Tư Gia Nhà Trai — Hà Nội</p>
       <div class="scroll-hint">
         <p>Kéo xuống để xem thêm</p>
         <span>↓</span>
@@ -1001,7 +1036,7 @@
   </section>
 
   <!-- Wishes -->
-  <section>
+  <!-- <section>
     <h2 class="section-title">Lời Chúc</h2>
     <p class="section-subtitle">Send your wishes</p>
     <div class="wishes-form">
@@ -1015,7 +1050,8 @@
       </div>
       <button class="btn" type="button" onclick="sendWish()">Gửi lời chúc</button>
     </div>
-  </section>
+    <div class="wishes-list" id="wishes-list"></div>
+  </section> -->
 
   <!-- Slideshow -->
   <div id="slideshow" role="dialog" aria-modal="true" aria-label="Xem ảnh cưới">
@@ -1064,19 +1100,19 @@
     setInterval(updateCountdown, 1000);
 
     // ===== Send Wish =====
-    function sendWish() {
-      const nameEl = document.getElementById('name');
-      const wishEl = document.getElementById('wish');
-      const name = nameEl.value.trim();
-      const wish = wishEl.value.trim();
-      if (!name || !wish) {
-        alert('Vui lòng nhập đầy đủ họ tên và lời chúc!');
-        return;
-      }
-      alert('Cảm ơn ' + name + '! Lời chúc của bạn đã được ghi nhận ♥');
-      nameEl.value = '';
-      wishEl.value = '';
-    }
+    // function sendWish() {
+    //   const nameEl = document.getElementById('name');
+    //   const wishEl = document.getElementById('wish');
+    //   const name = nameEl.value.trim();
+    //   const wish = wishEl.value.trim();
+    //   if (!name || !wish) {
+    //     alert('Vui lòng nhập đầy đủ họ tên và lời chúc!');
+    //     return;
+    //   }
+    //   alert('Cảm ơn ' + name + '! Lời chúc của bạn đã được ghi nhận ♥');
+    //     nameEl.value = '';
+    //     wishEl.value = '';
+    // }
 
     // ===== Button Ripple =====
     document.querySelectorAll('.btn').forEach(btn => {
